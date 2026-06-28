@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuBtn.addEventListener('click', () => {
         nav.classList.toggle('active');
         mobileMenuBtn.classList.toggle('active');
+        // Prevent scrolling on background when menu is open
+        if (nav.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     });
 
     // Close menu when clicking a link
@@ -14,14 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => {
             nav.classList.remove('active');
             mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!nav.contains(e.target) && !mobileMenuBtn.contains(e.target) && nav.classList.contains('active')) {
+    // Close menu when clicking the overlay background
+    nav.addEventListener('click', (e) => {
+        if (e.target === nav) {
             nav.classList.remove('active');
             mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
         }
     });
 
